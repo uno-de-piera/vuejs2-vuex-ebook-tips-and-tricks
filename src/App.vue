@@ -1,17 +1,27 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="Vue logo" src="./assets/logo.png"><br />
+    <button @click="resetState">
+      Restablecer el estado de complexModule
+    </button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import {mapState, mapActions, mapMutations} from 'vuex'
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  mounted () {
+      this.setFilters()
+  },
+  methods: {
+      ...mapActions('userModule', ['fetchUsers']),
+      ...mapActions('postModule', ['fetchPosts']),
+      ...mapMutations('complexModule', ['setFilters', 'resetState'])
+  },
+  computed: {
+      ...mapState('userModule', ['users']),
+      ...mapState('postModule', ['posts']),
   }
 }
 </script>
